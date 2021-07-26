@@ -1,4 +1,5 @@
-import serial, time
+import serial
+from pycaw.pycaw import AudioUtilities
 
 def main():
 	# make serial connection
@@ -9,6 +10,13 @@ def main():
 	while True:
 
 		data = arduino.readline().decode("utf-8")
+
+		# loop thru sessions
+		sessions = AudioUtilities.GetAllSessions()
+		for session in sessions:
+			volume = session.SimpleAudioVolume
+			if session.Process and session.Process.name() == "Discord.exe":
+				volume.SetMasterVolume(0.6, None)
 
 		print(data, end="")
 
