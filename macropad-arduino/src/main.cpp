@@ -1,29 +1,53 @@
 #include <Arduino.h>
 
-const int buttonPin = 2;
+const int skipPin = 2;
+const int pausePin = 3;
+const int prevPin = 4;
+const int irPin = 7;
 
-int buttonState = 0;
-int oldState = 0;
-int startedHeldTime = 0;
+
+int skipState, oldSkipState, pauseState, oldPauseState, prevState, oldPrevState;
+
+// int startedHeldTime = 0;
 
 void setup() {
 	Serial.begin(9600);
-	pinMode(buttonPin, INPUT_PULLUP);
+	pinMode(skipPin, INPUT_PULLUP);
+	pinMode(pausePin, INPUT_PULLUP);
+	pinMode(prevPin, INPUT_PULLUP);
 }
 
 void loop() {
 
-	oldState = buttonState;
-	buttonState = digitalRead(buttonPin);
-	
-	if (buttonState == 0) {
-		if (oldState == 1){
-			Serial.println("p");
-			startedHeldTime = millis();
-		}
-		if (startedHeldTime + 600 < millis()){
-			Serial.println('p');
-			delay(30);
-		}
+	oldSkipState = skipState;
+	oldPauseState = pauseState;
+	oldPrevState = prevState;
+
+	skipState = digitalRead(skipPin);
+	pauseState = digitalRead(pausePin);
+	prevState = digitalRead(prevPin);
+
+	if (oldSkipState != skipState && skipState == 0){
+		Serial.println("skip");
 	}
+	if (oldPauseState != pauseState && pauseState == 0){
+		Serial.println("pause");
+	}
+	if (oldPrevState != prevState && prevState == 0){
+		Serial.println("prev");
+	}
+
+
+	// if (buttonState == 0) {
+	// 	if (oldState == 1){
+	// 		Serial.println("skip");
+	// 		startedHeldTime = millis();
+	// 	}
+	// 	// if (startedHeldTime + 600 < millis()){
+	// 	// 	Serial.println("skip");
+	// 	// 	delay(30);
+	// 	// }
+	// }
+
+	delay(30);
 }
