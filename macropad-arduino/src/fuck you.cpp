@@ -6,7 +6,7 @@
 // 4,5,6
 // 7,8,9
 // 10,11
-const int
+byte
     pin1 = 2,
     pin2 = 3,
     pin3 = 4,
@@ -27,17 +27,9 @@ void setup()
 {
     Serial.begin(9600);
 
-    pinMode(pin1, INPUT_PULLUP);
-    pinMode(pin2, INPUT_PULLUP);
-    pinMode(pin3, INPUT_PULLUP);
-    pinMode(pin4, INPUT_PULLUP);
-    pinMode(pin5, INPUT_PULLUP);
-    pinMode(pin6, INPUT_PULLUP);
-    pinMode(pin7, INPUT_PULLUP);
-    pinMode(pin8, INPUT_PULLUP);
-    pinMode(pin9, INPUT_PULLUP);
-    pinMode(pin10, INPUT_PULLUP);
-    pinMode(pin11, INPUT_PULLUP);
+    for (int i=1; i<20; i++){
+        pinMode(i, INPUT_PULLUP);
+    }
 }
 
 void loop()
