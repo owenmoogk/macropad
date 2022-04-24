@@ -40,6 +40,7 @@ void loop()
 
                 keyPressed = true;
 
+                // playback
                 if (i == 0){
                     Serial.println("prev");
                 }
@@ -50,26 +51,36 @@ void loop()
                     Serial.println("skip");
                 }
 
-                // sticky caps
+                // master volume controls
                 if (i == 3){
+                    Serial.println("volumeDown");
+                }
+                if (i == 6){
+                    Serial.println("volumeUp");
+                }
+
+
+                // sticky caps
+                if (i == 5){
                     Serial.println("stickyCaps");
                 }
 
                 // discord volume controls
-                if(i == 5){
+                if(i == 4){
                     Serial.println("discordUp");
                 }
-                if(i == 8){
+                if(i == 7){
                     Serial.println("discordDown");
                 }
 
-                // master volume controls
+                // shortcuts
                 if (i == 9){
-                    Serial.println("volumeDown");
+                    Serial.println("copy");
                 }
                 if (i == 10){
-                    Serial.println("volumeUp");
+                    Serial.println("paste");
                 }
+
                 
             }
         }

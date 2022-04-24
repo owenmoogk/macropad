@@ -44,6 +44,16 @@ def main():
 		if "prev" in data:
 			win32api.keybd_event(VK_MEDIA_PREV_TRACK, 0, KEYEVENTF_EXTENDEDKEY, 0)
 
+		if 'copy' in data:
+			pyautogui.keyDown('ctrl')
+			pyautogui.press('c')
+			pyautogui.keyUp('ctrl')
+
+		if 'paste' in data:
+			pyautogui.keyDown('ctrl')
+			pyautogui.press('v')
+			pyautogui.keyUp('ctrl')
+
 		if "volumeUp" in data:
 			devices = AudioUtilities.GetSpeakers()
 			interface = devices.Activate(
