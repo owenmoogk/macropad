@@ -34,40 +34,6 @@ void setup()
 
 void loop()
 {
-    // if(!digitalRead(pin1)) {
-    // Serial.println("pin1");
-    // }
-    // if(!digitalRead(pin2)) {
-    // Serial.println("pin2");
-    // }
-    // if(!digitalRead(pin3)) {
-    // Serial.println("pin3");
-    // }
-    // if(!digitalRead(pin4)) {
-    // Serial.println("pin4");
-    // }
-    // if(!digitalRead(pin5)) {
-    // Serial.println("pin5");
-    // }
-    // if(!digitalRead(pin6)) {
-    // Serial.println("pin6");
-    // }
-    // if(!digitalRead(pin7)) {
-    // Serial.println("pin7");
-    // }
-    // if(!digitalRead(pin8)) {
-    // Serial.println("pin8");
-    // }
-    // if(!digitalRead(pin9)) {
-    // Serial.println("pin9");
-    // }
-    // if(!digitalRead(pin10)) {
-    // Serial.println("pin10");
-    // }
-    // if(!digitalRead(pin11)) {
-    // Serial.println("pin11");
-    // }
-
     Serial.print(digitalRead(pin1));
     Serial.print(digitalRead(pin2));
     Serial.print(digitalRead(pin3));
