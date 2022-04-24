@@ -2,31 +2,20 @@
 
 // pins used: 2,3,4,6,8,A0,A1,A2,A3,A4,A5
 
-// 1,2,3
-// 4,5,6
-// 7,8,9
-// 10,11
-byte
-    pin1 = 2,
-    pin2 = 3,
-    pin3 = 4,
+// 0,1,2
+// 3,4,5
+// 6,7,8
+// 9,10
 
-    pin4 = A3,
-    pin5 = A2,
-    pin6 = 6,
-
-    pin7 = A1,
-    pin8 = A0,
-    pin9 = 8,
-
-    pin10 = A5,
-    pin11 = A4
-;
+int buttonsPin[] = {2, 3, 4, A3, A2, 6, A1, A0, 8, A5, A4};
+bool keyPressed = false;
 
 void setup()
 {
     Serial.begin(9600);
-
+    // for(int i = 0; i < 11; i++) {
+    //     pinMode(buttonsPin[i], INPUT_PULLUP);
+    // }
     for (int i=1; i<20; i++){
         pinMode(i, INPUT_PULLUP);
     }
@@ -34,17 +23,58 @@ void setup()
 
 void loop()
 {
-    Serial.print(digitalRead(pin1));
-    Serial.print(digitalRead(pin2));
-    Serial.print(digitalRead(pin3));
-    Serial.print(digitalRead(pin4));
-    Serial.print(digitalRead(pin5));
-    Serial.print(digitalRead(pin6));
-    Serial.print(digitalRead(pin7));
-    Serial.print(digitalRead(pin8));
-    Serial.print(digitalRead(pin9));
-    Serial.print(digitalRead(pin10));
-    Serial.println(digitalRead(pin11));
+
+    if (keyPressed){
+        keyPressed = false;
+        for (int i = 0; i < 11; i++) {
+            if (digitalRead(buttonsPin[i]) == 0) {
+                keyPressed = true;
+            }
+        }
+    }
+
+    if (!keyPressed){
+        for(int i = 0; i < 11; i++) {
+
+            if (digitalRead(buttonsPin[i]) == 0) {
+
+                keyPressed = true;
+
+                if (i == 0){
+                    Serial.println("prev");
+                }
+                if (i == 1){
+                    Serial.println("pause");
+                }
+                if (i == 2){
+                    Serial.println("skip");
+                }
+
+                // sticky caps
+                if (i == 3){
+                    Serial.println("stickyCaps");
+                }
+
+                // discord volume controls
+                if(i == 5){
+                    Serial.println("discordUp");
+                }
+                if(i == 8){
+                    Serial.println("discordDown");
+                }
+
+                // master volume controls
+                if (i == 9){
+                    Serial.println("volumeDown");
+                }
+                if (i == 10){
+                    Serial.println("volumeUp");
+                }
+                
+            }
+        }
+
+    }
 
     delay(30);
 }
