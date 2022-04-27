@@ -1,2 +1,2 @@
-
-spotifyToken.py
+*.pyc
+.cache

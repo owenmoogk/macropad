@@ -4,16 +4,26 @@ from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume, ISimpleAudioVolume
 from win32con import *
-from spotifyToken import getSpotifyToken
+
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+from pprint import pprint
+from time import sleep
+import os
+
+os.environ["SPOTIPY_CLIENT_ID"] = '76c57350098e47e19eab6a4f50782348'
+os.environ["SPOTIPY_CLIENT_SECRET"] = 'c98eed161a6c434ca3e4b0d080de5c8a'
+os.environ["SPOTIPY_REDIRECT_URI"] = 'http://localhost'
+
+scope = "user-read-playback-state,user-modify-playback-state"
+
+sp = spotipy.Spotify(client_credentials_manager=SpotifyOAuth(scope=scope))
 
 def getSpotifyVolume():
-	r = requests.get(url='https://api.spotify.com/v1/me/player/devices', headers={
-    'Authorization': getSpotifyToken()})
-
-	devices = r.json()['devices']
-	for device in devices:
+	res = sp.devices()
+	for device in res['devices']:
 		if device['is_active']:
-			return device['volume_percent']
+			return(device['volume_percent'])
 
 def main():
 	# configure arduino
@@ -79,22 +89,12 @@ def main():
 			volume.SetMasterVolumeLevelScalar(newVolume, None)
 
 		if 'spotifyDown' in data:
-
 			newVolume = getSpotifyVolume() - 10
+			sp.volume(newVolume)
 
-			r = requests.put(url = 'https://api.spotify.com/v1/me/player/volume?volume_percent='+str(newVolume), headers={
-				'Authorization': getSpotifyToken()})
-			
-			print(r)
-		
 		if 'spotifyUp' in data:
 			newVolume = getSpotifyVolume() + 10
-
-			r = requests.put(url = 'https://api.spotify.com/v1/me/player/volume?volume_percent='+str(newVolume), headers={
-				'Authorization': getSpotifyToken()})
-			
-			print(r)
-			
+			sp.volume(newVolume)
 
 		if "stickyCaps" in data:
 			with open('sticky.txt', "r") as f:
