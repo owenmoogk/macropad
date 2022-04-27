@@ -1,16 +1,24 @@
 from time import sleep
-import serial
+import serial, win32api, pyautogui, requests
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume, ISimpleAudioVolume
-import win32api
 from win32con import *
-import pyautogui
+from spotifyToken import getSpotifyToken
+
+def getSpotifyVolume():
+	r = requests.get(url='https://api.spotify.com/v1/me/player/devices', headers={
+    'Authorization': getSpotifyToken()})
+
+	devices = r.json()['devices']
+	for device in devices:
+		if device['is_active']:
+			return device['volume_percent']
 
 def main():
 	# configure arduino
 	global arduino
-	arduino = serial.Serial('COM5', 9600)
+	arduino = serial.Serial('COM3', 9600)
 	arduino.reset_input_buffer()
 
 	print('running')
@@ -69,6 +77,24 @@ def main():
 			volume = cast(interface, POINTER(IAudioEndpointVolume))
 			newVolume = volume.GetMasterVolumeLevelScalar() - 0.02
 			volume.SetMasterVolumeLevelScalar(newVolume, None)
+
+		if 'spotifyDown' in data:
+
+			newVolume = getSpotifyVolume() - 10
+
+			r = requests.put(url = 'https://api.spotify.com/v1/me/player/volume?volume_percent='+str(newVolume), headers={
+				'Authorization': getSpotifyToken()})
+			
+			print(r)
+		
+		if 'spotifyUp' in data:
+			newVolume = getSpotifyVolume() + 10
+
+			r = requests.put(url = 'https://api.spotify.com/v1/me/player/volume?volume_percent='+str(newVolume), headers={
+				'Authorization': getSpotifyToken()})
+			
+			print(r)
+			
 
 		if "stickyCaps" in data:
 			with open('sticky.txt', "r") as f:
