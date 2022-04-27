@@ -53,16 +53,10 @@ void loop()
 
                 // master volume controls
                 if (i == 3){
-                    Serial.println("volumeDown");
-                }
-                if (i == 6){
                     Serial.println("volumeUp");
                 }
-
-
-                // sticky caps
-                if (i == 5){
-                    Serial.println("stickyCaps");
+                if (i == 6){
+                    Serial.println("volumeDown");
                 }
 
                 // discord volume controls
@@ -73,14 +67,22 @@ void loop()
                     Serial.println("discordDown");
                 }
 
+                // spotify volume controls
+                if (i == 5){
+                    Serial.println("spotifyUp");
+                }
+                if (i == 8){
+                    Serial.println("spotifyDown");
+                }
+
+
                 // shortcuts
                 if (i == 9){
-                    Serial.println("copy");
+                    Serial.println("stickyCaps");
                 }
                 if (i == 10){
                     Serial.println("paste");
                 }
-
                 
             }
         }
