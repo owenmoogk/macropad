@@ -34,7 +34,7 @@ def main():
     arduino = serial.Serial('COM3', 9600)
     arduino.reset_input_buffer()
 
-    print('running')
+    print('running main')
 
     while True:
 
@@ -105,9 +105,9 @@ def main():
             sp.volume(newVolume)
 
         if "stickyCaps" in data:
-            with open('sticky.txt', "r") as f:
+            with open(r'C:\Users\owenm\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\macropad\sticky.txt', "r") as f:
                 lines = f.readlines()
-            with open('sticky.txt', "w") as f:
+            with open(r'C:\Users\owenm\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\macropad\sticky.txt', "w") as f:
 
                 # if off turn on
                 if lines[0] == 'false':
