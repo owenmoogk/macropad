@@ -39,7 +39,7 @@ def main():
                 volume = session.SimpleAudioVolume
                 if session.Process and session.Process.name() == 'Spotify.exe':
                     volume.SetMasterVolume(
-                        max(round(volume.GetMasterVolume() + 0.10, 2), 0), None)
+                        min(round(volume.GetMasterVolume() + 0.10, 2), 1), None)
                     
         # discord volume
         if 'discordDown' in data:
@@ -56,7 +56,7 @@ def main():
                 volume = session.SimpleAudioVolume
                 if session.Process and session.Process.name() == 'Discord.exe':
                     volume.SetMasterVolume(
-                        max(round(volume.GetMasterVolume() + 0.1, 2), 0), None)
+                        min(round(volume.GetMasterVolume() + 0.1, 2), 1), None)
 
         if 'pause' in data:
             win32api.keybd_event(VK_MEDIA_PLAY_PAUSE, 0,
@@ -85,7 +85,7 @@ def main():
             interface = devices.Activate(
                 IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
             volume = cast(interface, POINTER(IAudioEndpointVolume))
-            newVolume = volume.GetMasterVolumeLevelScalar() + 0.02
+            newVolume = min(volume.GetMasterVolumeLevelScalar() + 0.02, 1)
             volume.SetMasterVolumeLevelScalar(newVolume, None)
 
         if "volumeDown" in data:
@@ -93,7 +93,7 @@ def main():
             interface = devices.Activate(
                 IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
             volume = cast(interface, POINTER(IAudioEndpointVolume))
-            newVolume = volume.GetMasterVolumeLevelScalar() - 0.02
+            newVolume = max(volume.GetMasterVolumeLevelScalar() - 0.02, 0)
             volume.SetMasterVolumeLevelScalar(newVolume, None)
 
 
