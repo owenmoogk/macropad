@@ -78,7 +78,7 @@ void loop()
 
                 // shortcuts
                 if (i == 9){
-                    Serial.println("stickyCaps");
+                    Serial.println("copy");
                 }
                 if (i == 10){
                     Serial.println("paste");
