@@ -1,2 +1,5 @@
 *.pyc
 .cache
+history
+Project Logs for macropad-pcb
+*.drc
